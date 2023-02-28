@@ -1,5 +1,5 @@
-import IServiceTeam from "../interfaces/IServiceTeam";
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
+import IServiceTeam from '../interfaces/IServiceTeam';
 
 class TeamController {
   private _team: IServiceTeam;
