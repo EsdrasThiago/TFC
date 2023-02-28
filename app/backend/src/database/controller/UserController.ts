@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
+import { compare } from 'bcryptjs';
 import IServiceUser from '../interfaces/IServiceUser';
 import newToken from '../../validation/jwtconfig';
+
+const INVALID_MESSAGE = 'Invalid email or password';
 
 class UserController {
   private _user: IServiceUser;
@@ -11,16 +14,22 @@ class UserController {
 
   async loginUser(req: Request, res: Response) {
     const { body } = req;
-    const login = await this._user.loginUser(body);
-    const token = newToken(body.password);
-    if (!login) return res.status(401).json({ message: 'Invalid email or password' });
-    return res.status(200).json(token);
+    const login = await this._user.loginUser(body.email);
+    const token = newToken(body.email);
+    if (!login) return res.status(401).json({ message: INVALID_MESSAGE });
+    const rightPassword = await compare(body.password, login.password);
+    console.log(rightPassword);
+    if (rightPassword) {
+      return res.status(200).json(token);
+    }
+    return res.status(401).json({ message: INVALID_MESSAGE });
   }
 
   async findRole(req: Request, res: Response) {
     const { body } = req;
-    const role = await this._user.findRole(body);
-    if (!role) return res.status(401).json({ message: 'Invalid email or password' });
+    const role = await this._user.findRole(body.email);
+    if (!role) return res.status(401).json({ message: INVALID_MESSAGE });
+
     return res.status(200).json(role);
   }
 }

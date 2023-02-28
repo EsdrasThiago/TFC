@@ -1,29 +1,25 @@
 import { ModelStatic } from 'sequelize';
 // import IError from '../interfaces/IError';
 import IServiceUser from '../interfaces/IServiceUser';
-import IUser from '../interfaces/IUser';
+// import IUser from '../interfaces/IUser';
 import User from '../models/UserModel';
 
 export default class UserService implements IServiceUser {
   protected model: ModelStatic<User> = User;
-  async loginUser(user: IUser): Promise<User | null> {
-    const { email, password } = user;
-    const login = this.model.findOne({
-      where: { email, password },
+  async loginUser(email: string): Promise<User | null> {
+    const login = await this.model.findOne({
+      where: { email },
     });
-    if (!login) {
-      throw new Error('Invalid email or password');
-    }
 
     return login;
   }
 
-  async findRole(user: IUser): Promise<User | null> {
-    const { email, password } = user;
-    const userRole = this.model.findOne({
+  async findRole(email: string): Promise<User | null> {
+    const userRole = await this.model.findOne({
       attributes: ['role'],
-      where: { email, password },
+      where: { email },
     });
+
     return userRole;
   }
 }

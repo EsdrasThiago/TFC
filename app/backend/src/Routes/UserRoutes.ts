@@ -21,7 +21,6 @@ userRoutes.get(
   '/login/role',
   tokenValidation,
   emailValidation,
-  passwordValidation,
   (req: Request, res: Response) => userController.findRole(req, res),
 );
 

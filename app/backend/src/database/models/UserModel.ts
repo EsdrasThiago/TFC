@@ -12,11 +12,11 @@ class User extends Model {
 }
 
 User.init({
-  id: { type: INTEGER, primaryKey: true, autoIncrement: true },
-  username: STRING,
-  role: STRING,
-  email: STRING,
-  password: STRING,
+  id: { type: INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+  username: { type: STRING, allowNull: false },
+  role: { type: STRING, allowNull: false },
+  email: { type: STRING, allowNull: false },
+  password: { type: STRING, allowNull: false },
 }, {
   // ... Outras configs
   underscored: true,
