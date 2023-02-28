@@ -15,12 +15,12 @@ class UserController {
   async loginUser(req: Request, res: Response) {
     const { body } = req;
     const login = await this._user.loginUser(body.email);
-    const token = newToken(body.email);
+    const token = newToken(body.password);
     if (!login) return res.status(401).json({ message: INVALID_MESSAGE });
     const rightPassword = await compare(body.password, login.password);
     console.log(rightPassword);
     if (rightPassword) {
-      return res.status(200).json(token);
+      return res.status(200).json({ token });
     }
     return res.status(401).json({ message: INVALID_MESSAGE });
   }
