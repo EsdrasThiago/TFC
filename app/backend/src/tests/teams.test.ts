@@ -45,4 +45,31 @@ describe('Testes do findAll Teams', () => {
   })
 });
 
-// describe('Testes do findById Teams')
+describe('Testes do findById Teams', () => {
+  beforeEach(() => {
+    sinon.stub(Model, 'findOne').resolves(outputMock[0]);
+  })
+
+  afterEach(() => {
+    (TeamModel.findOne as sinon.SinonStub).restore();
+  })
+
+  it('Testa se "findById" da service retorna todos os times', async () => {
+
+    const service = new TeamServices();
+    const result = await service.findById(1);
+
+    chai.expect(result).to.be.equal(outputMock[0])
+  })
+
+  it('Testa se "findById" da controller retorna todos os times', async () => {
+
+    const result = await chai.request(app).get('/teams/:id')
+
+    chai.expect(result.status).to.equal(200);
+    chai.expect(result.body).to.be.deep.equal({
+      id: 1,
+      teamName: 'Vasco da gama',
+    });
+  })
+})
