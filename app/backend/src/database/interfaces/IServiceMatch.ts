@@ -7,5 +7,5 @@ export default interface IServiceMatch {
   findByInProgress(status: boolean): Promise<Match[]>;
   finishMatch(id: number): Promise<[affectedCount: number]>;
   editMatch(id: number, data: IGoals): Promise<[affectedCount: number]>;
-  newMatch(data: IMatch): Promise<Match>;
+  newMatch(data: IMatch): Promise<Match | string>;
 }

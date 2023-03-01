@@ -3,6 +3,7 @@ import { Router, Request, Response } from 'express';
 import MatchService from '../database/services/MatchServices';
 import MatchController from '../database/controller/MatchController';
 import tokenValidation from '../validation/tokenvalidation';
+import teamEqualValidation from '../validation/equalteams';
 
 const matchRoutes = Router();
 const matchService = new MatchService();
@@ -23,6 +24,7 @@ matchRoutes.patch(
 matchRoutes.post(
   '/matches',
   tokenValidation,
+  teamEqualValidation,
   (req: Request, res: Response) => matchController.newMatch(req, res),
 );
 

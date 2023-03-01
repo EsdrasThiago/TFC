@@ -40,16 +40,20 @@ export default class MatchService implements IServiceMatch {
     );
   }
 
-  async newMatch(data: IMatch): Promise<Match> {
+  async newMatch(data: IMatch): Promise<Match | string> {
     const { homeTeamGoals, awayTeamGoals,
       homeTeamId, awayTeamId } = data;
-    return this.model.create({
-      homeTeamId,
-      homeTeamGoals,
-      awayTeamId,
-      awayTeamGoals,
-      inProgress: true,
-    });
+    try {
+      return await this.model.create({
+        homeTeamId,
+        homeTeamGoals,
+        awayTeamId,
+        awayTeamGoals,
+        inProgress: true,
+      });
+    } catch {
+      return 'There is no team with such id!';
+    }
   }
 
   protected model: ModelStatic<Match> = Match;

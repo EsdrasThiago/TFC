@@ -36,6 +36,9 @@ class MatchController {
 
   async newMatch(req: Request, res: Response) {
     const newMatch = await this._match.newMatch(req.body);
+    if (typeof newMatch === 'string') {
+      return res.status(404).json({ message: 'There is no team with such id!' });
+    }
     return res.status(201).json(newMatch);
   }
 }
