@@ -13,13 +13,4 @@ export default class UserService implements IServiceUser {
 
     return login;
   }
-
-  async findRole(email: string): Promise<User | null> {
-    const userRole = await this.model.findOne({
-      attributes: ['role'],
-      where: { email },
-    });
-
-    return userRole;
-  }
 }

@@ -15,10 +15,9 @@ class UserController {
   async loginUser(req: Request, res: Response) {
     const { body } = req;
     const login = await this._user.loginUser(body.email);
-    const token = newToken(body.password);
+    const token = newToken(body.email);
     if (!login) return res.status(401).json({ message: INVALID_MESSAGE });
     const rightPassword = await compare(body.password, login.password);
-    console.log(rightPassword);
     if (rightPassword) {
       return res.status(200).json({ token });
     }
@@ -26,11 +25,13 @@ class UserController {
   }
 
   async findRole(req: Request, res: Response) {
-    const { body } = req;
-    const role = await this._user.findRole(body.email);
-    if (!role) return res.status(401).json({ message: INVALID_MESSAGE });
+    const email = req.body.jwt.password;
+    if (!email) return res.status(401).json({ message: INVALID_MESSAGE });
+    const user = await this._user.loginUser(email);
+    if (!user) return res.status(401).json({ message: INVALID_MESSAGE });
+    const { role } = user;
 
-    return res.status(200).json(role);
+    return res.status(200).json({ role });
   }
 }
 

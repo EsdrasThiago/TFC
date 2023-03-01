@@ -5,5 +5,4 @@ import User from '../models/UserModel';
 
 export default interface IServiceUser {
   loginUser(email: string): Promise<User | null>;
-  findRole(email: string): Promise<User | null>;
 }
