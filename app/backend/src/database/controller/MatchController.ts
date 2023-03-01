@@ -19,6 +19,13 @@ class MatchController {
     if (!matchs) return res.status(400).json('test');
     return res.status(200).json(matchs);
   }
+
+  async finishMatch(req: Request, res: Response) {
+    const { id } = req.params;
+    const idToNumber = Number(id);
+    await this._match.finishMatch(idToNumber);
+    return res.status(200).json({ message: 'Finished' });
+  }
 }
 
 export default MatchController;

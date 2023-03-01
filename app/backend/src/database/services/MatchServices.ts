@@ -23,5 +23,12 @@ export default class MatchService implements IServiceMatch {
     });
   }
 
+  async finishMatch(id: number): Promise<[affectedCount: number]> {
+    return this.model.update(
+      { inProgress: false },
+      { where: { id } },
+    );
+  }
+
   protected model: ModelStatic<Match> = Match;
 }
