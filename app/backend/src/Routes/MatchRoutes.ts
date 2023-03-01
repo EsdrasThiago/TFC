@@ -14,6 +14,18 @@ matchRoutes.patch(
   (req: Request, res: Response) => matchController.finishMatch(req, res),
 );
 
+matchRoutes.patch(
+  '/matches/:id',
+  tokenValidation,
+  (req: Request, res: Response) => matchController.editMatch(req, res),
+);
+
+matchRoutes.post(
+  '/matches',
+  tokenValidation,
+  (req: Request, res: Response) => matchController.newMatch(req, res),
+);
+
 matchRoutes.get('/matches', (req: Request, res: Response) => matchController.findAll(req, res));
 
 export default matchRoutes;

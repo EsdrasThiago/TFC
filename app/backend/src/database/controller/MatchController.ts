@@ -26,6 +26,18 @@ class MatchController {
     await this._match.finishMatch(idToNumber);
     return res.status(200).json({ message: 'Finished' });
   }
+
+  async editMatch(req: Request, res: Response) {
+    const { id } = req.params;
+    const idToNumber = Number(id);
+    await this._match.editMatch(idToNumber, req.body);
+    return res.status(200).json({ message: 'Edited' });
+  }
+
+  async newMatch(req: Request, res: Response) {
+    const newMatch = await this._match.newMatch(req.body);
+    return res.status(201).json(newMatch);
+  }
 }
 
 export default MatchController;
