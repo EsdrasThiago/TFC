@@ -1,5 +1,6 @@
 import Match from '../models/MatchModel';
 
 export default interface IServiceMatch {
-  findAll(status: boolean): Promise<Match[]>;
+  findAll(): Promise<Match[]>;
+  findByInProgress(status: boolean): Promise<Match[]>;
 }
