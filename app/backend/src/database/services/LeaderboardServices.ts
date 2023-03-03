@@ -41,4 +41,4 @@ export default class LeaderboardService implements IServiceLeaderboard {
 //     [Sequelize.fn('SUM', Sequelize.col('home_team_goals')), 'goalsFavor'],
 //     [Sequelize.fn('SUM', Sequelize.col('away_team_goals')), 'goalsOwn'],
 //   ],
-// });
+// })
