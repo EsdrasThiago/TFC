@@ -36,6 +36,7 @@ class MatchController {
 
   async newMatch(req: Request, res: Response) {
     const newMatch = await this._match.newMatch(req.body);
+    console.log(newMatch);
     if (typeof newMatch === 'string') return res.status(404).json({ message: newMatch });
     return res.status(201).json(newMatch);
   }
